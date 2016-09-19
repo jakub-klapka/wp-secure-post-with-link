@@ -9,7 +9,9 @@ class Config {
 	/**
 	 * @var array All config variables
 	 */
-	private $config = [];
+	private $config = [
+		'allowed_post_types' => [ 'blog' ]
+	];
 
 	/**
 	 * Config constructor.
@@ -28,9 +30,7 @@ class Config {
 	 *
 	 * get_plugin_data function is not avail on boot, we have to set it on init action
 	 *
-	 * @wp-action plugins_loaded
-	 *
-	 * @return mixed
+	 * @wp-action init
 	 */
 	public function setPluginVersion() {
 

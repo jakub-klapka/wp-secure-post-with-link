@@ -20,12 +20,14 @@ class RegisterPostStatus {
 
 	/**
 	 * Register WP internal post status
+	 *
+	 * @wp-action init
 	 */
 	public function registerWpPostStatus() {
 
 		register_post_status( 'secured', array(
 			'label'                     => 'Skrytý odkaz', //TODO: textdomain
-			'public'                    => true,
+			'public'                    => true, //TODO: examine, why we dont see false on edit.php
 			'exclude_from_search'       => true,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,

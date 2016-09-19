@@ -1,4 +1,8 @@
-( function( $ ){
+/* global securePostWithLink = [
+	 'enable_ui' => $enable_ui,
+	 'current_post_status' => $post->post_status ]
+ */
+( function( $, data ){
 
 	var AdminUi = {
 
@@ -15,6 +19,9 @@
 
 			//Bootstrap
 			this.addVisibilitySettings();
+			if( data.current_post_status === 'secured' ) {
+				this.modifyUiOnSecuredPost();
+			}
 
 			//Events
 			$( '.save-post-visibility' ).on( 'click', $.proxy( this.okButtonHandler, this ) );
@@ -57,15 +64,35 @@
 
 			}
 
+		},
+
+		/*
+		 * If current post is secured, modify visibility and status inputs acordingly
+		 */
+		modifyUiOnSecuredPost: function() {
+			$( this.new_input).prop( 'checked', true );
+			$( '#post-visibility-display' ).text( 'Skrytý odkaz' ); //TODO: translate
+
+			var new_option = $( '<option/>' )
+				.attr( 'value', 'secured' )
+				.prop( 'selected', true )
+				.text( 'Skrytý odkaz' ); //TODO: as usual
+
+			$( '#post_status' ).val( 'secured' ).append( new_option );
+			$( '.save-post-status' ).trigger( 'click' );
 		}
 
 	};
 
 	/*
 	Init on DOM Ready
+	Only if we want UI on current screen
 	 */
-	$( function() {
-		Object.create( AdminUi ).init();
-	} );
+	if( data.enable_ui ){
+		$( function() {
+			Object.create( AdminUi ).init();
+		} );
+	}
 
-})( jQuery );
+
+})( jQuery, securePostWithLink );

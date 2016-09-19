@@ -1,12 +1,13 @@
 <?php
 /*
 Plugin Name: Secure Post with Link
-Description: Set link with token for post access
-Version:     1.0
+Description: Add new status for posts: "Secured with Link". Posts with this status will be accessible only on URL with randomly generated token.
+Version:     0.9
 Author:      Jakub Klapka
 Author URI:  https://www.lumiart.cz/
 Text Domain: lumi-secure-post-with-link
 Domain Path: /languages
+Repository: https://github.com/jakub-klapka/wp-secure-post-with-link
 */
 
 /*
@@ -19,6 +20,7 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
  */
 use Lumi\SecurePostWithLink\Config;
 use Lumi\SecurePostWithLink\Controllers\AdminUi;
+use Lumi\SecurePostWithLink\Controllers\HandlePostSave;
 use Lumi\SecurePostWithLink\Controllers\RegisterPostStatus;
 
 /**
@@ -42,3 +44,4 @@ spl_autoload_register( function( $class_name ) {
 Config::getInstance();
 RegisterPostStatus::getInstance();
 AdminUi::getInstance();
+HandlePostSave::getInstance();
