@@ -7,10 +7,17 @@ class Config {
 	use SingletonTrait;
 
 	/**
-	 * @var array All config variables
+	 * @var array   $config Holder for all config values
+	 * @var array   $config['allowed_post_types'] Array of post types, which shoud have option to secure by link
+	 * @var string  $config['secured_meta_name'] Internal name for token post_meta
+	 * @var string  $config['token_length'] Lenght of acces token in bytes! (Chars for non-openssl version)
+	 * @var string  $config['use_openssl'] If false, use internal PHP random generator - not crypto secure!
 	 */
 	private $config = [
-		'allowed_post_types' => [ 'blog' ]
+		'allowed_post_types' => [ 'blog' ],
+		'secured_meta_name' => '_secured_with_link_token',
+		'token_length' => 4,
+		'use_openssl' => true
 	];
 
 	/**
@@ -46,9 +53,7 @@ class Config {
 	 * @param mixed $value Attribute value
 	 */
 	private function set( $attr, $value ) {
-		
 		$this->config[ $attr ] = $value;
-		
 	}
 
 	/**

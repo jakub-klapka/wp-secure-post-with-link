@@ -21,6 +21,8 @@ class AdminUi {
 
 		add_action( 'current_screen', [ $this, 'maybeEnqueueScript' ] );
 
+		add_filter( 'get_sample_permalink', [ $this, 'modifySamplePermalinkOnSecuredPosts' ], 10, 5 );
+
 	}
 
 	/**
@@ -97,6 +99,33 @@ class AdminUi {
 		};
 
 		return false;
+
+	}
+
+	/**
+	 * @param string  $permalink Sample permalink.
+	 *                  Eg.: $permalink = {array} [2]
+	 *                          0 = "https://localhost/linnette_2015/wp/blog/%pagename%/"
+	 *                          1 = "tomas-hajzler-krest-knizek"
+	 * @param int     $post_id   Post ID.
+	 * @param string  $title     Post title.
+	 * @param string  $name      Post name (slug).
+	 * @param \WP_Post $post      Post object.
+	 * @wp-filter get_sample_permalink
+	 *
+	 * @return string
+	 */
+	public function modifySamplePermalinkOnSecuredPosts( $permalink, $post_id, $title, $name, $post ) {
+
+		if( $post->post_status !== 'secured' ) return $permalink;
+
+		$token = get_post_meta( $post->ID, $this->config->get( 'secured_meta_name' ), true );
+
+		if( $token != false ) {
+			$permalink[ 0 ] = $permalink[ 0 ] . $token . '/';
+		}
+
+		return $permalink;
 
 	}
 
