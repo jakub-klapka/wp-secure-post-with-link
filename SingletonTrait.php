@@ -22,4 +22,10 @@ trait SingletonTrait {
 		return static::$instance;
 	}
 
+	public function __construct() {
+	}
+
+	public function __clone() {
+	}
+
 }

@@ -7,7 +7,7 @@ Author:      Jakub Klapka
 Author URI:  https://www.lumiart.cz/
 Text Domain: lumi-secure-post-with-link
 Domain Path: /languages
-Repository: https://github.com/jakub-klapka/wp-secure-post-with-link
+Repository:  https://github.com/jakub-klapka/wp-secure-post-with-link
 */
 
 /*
@@ -15,13 +15,14 @@ Repository: https://github.com/jakub-klapka/wp-secure-post-with-link
  */
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-/**
- * Import classes
+/*
+ * Define Providers
  */
-use Lumi\SecurePostWithLink\Config;
-use Lumi\SecurePostWithLink\Controllers\AdminUi;
-use Lumi\SecurePostWithLink\Controllers\HandlePostSave;
-use Lumi\SecurePostWithLink\Controllers\RegisterPostStatus;
+$providers = [
+	Lumi\SecurePostWithLink\Controllers\AdminUi::class,
+	Lumi\SecurePostWithLink\Controllers\HandlePostSave::class,
+	Lumi\SecurePostWithLink\Controllers\RegisterPostStatus::class
+];
 
 /**
  * Classes autoloader
@@ -37,11 +38,10 @@ spl_autoload_register( function( $class_name ) {
 
 } );
 
-
 /**
  * Load App
  */
-Config::getInstance();
-RegisterPostStatus::getInstance();
-AdminUi::getInstance();
-HandlePostSave::getInstance();
+foreach( $providers as $provider ) {
+	$instance = call_user_func( $provider . '::getInstance' );
+	$instance->boot();
+}

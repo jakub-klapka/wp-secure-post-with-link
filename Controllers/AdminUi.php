@@ -4,18 +4,19 @@ namespace Lumi\SecurePostWithLink\Controllers;
 
 
 use Lumi\SecurePostWithLink\Config;
+use Lumi\SecurePostWithLink\ProviderInterface;
 use Lumi\SecurePostWithLink\SingletonTrait;
 
-class AdminUi {
+
+class AdminUi implements ProviderInterface {
 	use SingletonTrait;
 
 	private $config;
 
 	/**
-	 * AdminUi constructor.
-	 * Register WP actions
+	 * Register WP actions and inject deps
 	 */
-	public function __construct() {
+	public function boot() {
 
 		$this->config = Config::getInstance();
 

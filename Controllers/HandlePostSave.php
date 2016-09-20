@@ -4,27 +4,39 @@ namespace Lumi\SecurePostWithLink\Controllers;
 
 
 use Lumi\SecurePostWithLink\Config;
+use Lumi\SecurePostWithLink\ProviderInterface;
 use Lumi\SecurePostWithLink\SingletonTrait;
 
-class HandlePostSave {
+
+class HandlePostSave implements ProviderInterface {
 	use SingletonTrait;
 
 	private $config;
 
 	/**
-	 * HandlePostSave constructor.
-	 * Register hooks
+	 * Register WP actions and inject deps
 	 */
-	public function __construct() {
+	public function boot() {
 
 		$this->config = Config::getInstance();
 
 		add_filter( 'wp_insert_post_data', [ $this, 'maybeChangeStatus' ], 10, 2 );
 
+		add_action( 'init', [ $this, 'addSaveActionForPostTypes' ] );
+
+	}
+
+	/**
+	 * Register token generation on save post for specific post types
+	 *
+	 * Proper config variable is avail after init (for theme override)
+	 *
+	 * @wp-action init
+	 */
+	public function addSaveActionForPostTypes() {
 		foreach ( $this->config->get( 'allowed_post_types' ) as $type ) {
 			add_action( "save_post_{$type}", [ $this, 'maybeGenerateNewToken' ], 10, 3 );
 		}
-
 	}
 
 	/**

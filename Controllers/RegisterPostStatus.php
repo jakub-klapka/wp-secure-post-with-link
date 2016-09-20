@@ -3,16 +3,17 @@
 namespace Lumi\SecurePostWithLink\Controllers;
 
 
+use Lumi\SecurePostWithLink\ProviderInterface;
 use Lumi\SecurePostWithLink\SingletonTrait;
 
-class RegisterPostStatus {
+
+class RegisterPostStatus implements ProviderInterface {
 	use SingletonTrait;
 
 	/**
-	 * RegisterPostStatus constructor.
-	 * Hook to WP actions
+	 * Register WP actions and inject deps
 	 */
-	public function __construct() {
+	public function boot() {
 
 		add_action( 'init', [ $this, 'registerWpPostStatus' ] );
 

@@ -28,7 +28,11 @@ class Config {
 
 		$this->set( 'assets_url', plugins_url( 'assets', __FILE__ ) );
 
-		add_action( 'init', [ $this, 'setPluginVersion' ], 1 );
+		if( did_action( 'init' ) ) {
+			$this->setPluginVersion();
+		} else {
+			add_action( 'init', [ $this, 'setPluginVersion' ], 1 );
+		}
 
 	}
 
