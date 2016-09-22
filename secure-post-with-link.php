@@ -21,7 +21,8 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 $providers = [
 	Lumi\SecurePostWithLink\Controllers\AdminUi::class,
 	Lumi\SecurePostWithLink\Controllers\HandlePostSave::class,
-	Lumi\SecurePostWithLink\Controllers\RegisterPostStatus::class
+	Lumi\SecurePostWithLink\Controllers\RegisterPostStatus::class,
+	Lumi\SecurePostWithLink\Controllers\HandleFrontAccess::class
 ];
 
 /**
