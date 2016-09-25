@@ -11,6 +11,7 @@ use Lumi\SecurePostWithLink\SingletonTrait;
 class AdminUi implements ProviderInterface {
 	use SingletonTrait;
 
+	/** @var Config $config */
 	private $config;
 
 	/**
@@ -123,7 +124,7 @@ class AdminUi implements ProviderInterface {
 		$token = get_post_meta( $post->ID, $this->config->get( 'secured_meta_name' ), true );
 
 		if( $token != false ) {
-			$permalink[ 0 ] = $permalink[ 0 ] . $token . '/';
+			$permalink[ 0 ] = $permalink[ 0 ] . $this->config->get( 'url_identifier' ) . '/' . $token . '/';
 		}
 
 		return $permalink;

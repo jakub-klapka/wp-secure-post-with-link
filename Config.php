@@ -20,6 +20,7 @@ class Config {
 	private $config = [
 		'allowed_post_types' => [ 'blog' ],
 		'secured_meta_name' => '_secured_with_link_token',
+		'url_identifier' => 's',
 		'token_length' => 4,
 		'use_openssl' => true
 	];
