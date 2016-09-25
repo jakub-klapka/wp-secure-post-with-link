@@ -28,7 +28,7 @@ class RegisterPostStatus implements ProviderInterface {
 
 		register_post_status( 'secured', array(
 			'label'                     => 'Skrytý odkaz', //TODO: textdomain
-			'public'                    => true, //TODO: examine, why we dont see false on edit.php
+			'public'                    => false, //TODO: examine, why we dont see false on edit.php
 			'exclude_from_search'       => true,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,

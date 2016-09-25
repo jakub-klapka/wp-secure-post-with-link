@@ -23,6 +23,19 @@ class HandleFrontAccess implements ProviderInterface {
 		
 		add_action( 'init', [ $this, 'registerRewriteTag' ] );
 
+		/**
+		 * Battleplan:
+		 * 1. If there is matched access token via rewrite, inject post_status = secured into query vars
+		 *      As WP logic dictates, if we are querying single post and specific post_status, it won't fire 404.
+		 *      That way, we can use main WP Query to fetch single secured post, but we won't get secured posts
+		 *      in any other query - including archives, sitemaps etc.
+		 * 2. After fetching single secured post, we have to check for valid token and abort, if it's not valid
+		 */
+
+		add_action( 'parse_request', [ $this, 'maybeAddPostStatusQueryVarToRequest' ] );
+
+		add_action( 'wp', [ $this, 'checkForValidAccessToken' ] );
+
 		//TODO: flush rules on plugin activation
 
 	}
@@ -127,6 +140,49 @@ class HandleFrontAccess implements ProviderInterface {
 		
 		add_rewrite_tag( '%secure_link_token%', '([^&]+)' );
 		
+	}
+
+	/**
+	 * Add post_status query to WP Query vars if we are accessing secured post
+	 *
+	 * @param \WP $wp Passed by reference
+	 */
+	public function maybeAddPostStatusQueryVarToRequest( $wp ) {
+
+		if( isset( $wp->query_vars[ 'secure_link_token' ] )
+		    && !empty( $wp->query_vars[ 'secure_link_token' ] )
+			&& in_array( $wp->query_vars[ 'post_type' ], $this->config->get( 'allowed_post_types' ) ) ) {
+
+			$wp->query_vars[ 'post_status' ] = 'secured';
+
+		}
+
+	}
+
+	/**
+	 * Check for valid token on secured posts and maybe die
+	 *
+	 * We are applying this logic to all queries - probably on all queries for secured post type, we wnat this
+	 * check anyway.
+	 *
+	 * @param \WP $wp WP Object Passed by reference
+	 */
+	public function checkForValidAccessToken( $wp ) {
+		global $wp_query;
+
+		if( $wp_query->is_singular() && $wp_query->post->post_status === 'secured' ) {
+
+			$post_access_token = get_post_meta( $wp_query->post->ID, $this->config->get( 'secured_meta_name' ), true );
+
+			if( !isset( $wp->query_vars['secure_link_token'] )
+			    || $wp->query_vars['secure_link_token'] !== $post_access_token ) {
+
+				wp_die( 'Nepovolený přístup.', null, [ 'response' => 401 ] ); //TODO: translate
+
+			}
+
+		}
+
 	}
 
 }
