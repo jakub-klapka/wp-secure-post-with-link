@@ -81,7 +81,8 @@ class AdminUi implements ProviderInterface {
 
 		$data = [
 			'enable_ui' => $enable_ui,
-			'current_post_status' => $post->post_status
+			'current_post_status' => $post->post_status,
+			'lang_secured_link' => __( 'Secured Link', $this->config->get( 'textdomain' ) )
 		];
 
 		wp_localize_script( 'secure-post-with-link--admin-ui', 'securePostWithLink', $data );
@@ -145,7 +146,7 @@ class AdminUi implements ProviderInterface {
 	 */
 	public function addPostStateToPostsListing( $post_states, $post ) {
 		if( $post->post_status === 'secured' ) {
-			$post_states[] = 'Zabezpečeno odkazem'; //TODO: as usual
+			$post_states[] = __( 'Secured with link', $this->config->get( 'textdomain' ) );
 		}
 		return $post_states;
 	}

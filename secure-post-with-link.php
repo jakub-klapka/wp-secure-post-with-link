@@ -1,12 +1,12 @@
 <?php
 /*
-Plugin Name: Secure Post with Link
+Plugin Name: Secure Post with Link [Work In Progress]
 Description: Add new status for posts: "Secured with Link". Posts with this status will be accessible only on URL with randomly generated token.
 Version:     0.9
 Author:      Jakub Klapka
 Author URI:  https://www.lumiart.cz/
 Text Domain: lumi-secure-post-with-link
-Domain Path: /languages
+Domain Path: /lang
 Repository:  https://github.com/jakub-klapka/wp-secure-post-with-link
 */
 
@@ -22,7 +22,8 @@ $providers = [
 	Lumi\SecurePostWithLink\Controllers\AdminUi::class,
 	Lumi\SecurePostWithLink\Controllers\HandlePostSave::class,
 	Lumi\SecurePostWithLink\Controllers\RegisterPostStatus::class,
-	Lumi\SecurePostWithLink\Controllers\HandleFrontAccess::class
+	Lumi\SecurePostWithLink\Controllers\HandleFrontAccess::class,
+	Lumi\SecurePostWithLink\Controllers\Translation::class
 ];
 
 /**

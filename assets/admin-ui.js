@@ -44,7 +44,7 @@
 			var new_label = $( "<label/>" )
 				.attr( 'for', 'visibility-radio-secured' )
 				.attr( 'class', 'selectit' )
-				.text( ' Skrytý odkaz' );
+				.text( ' ' + data.lang_secured_link );
 
 			private_label.after( new_label ).after( new_input ).after( $( "<br/>" ) );
 
@@ -60,7 +60,7 @@
 
 			if( this.new_input.checked ) {
 
-				$( '#post-visibility-display' ).text( 'Skrytý odkaz' ); //TODO: translate
+				$( '#post-visibility-display' ).text( data.lang_secured_link );
 
 			}
 
@@ -71,12 +71,12 @@
 		 */
 		modifyUiOnSecuredPost: function() {
 			$( this.new_input).prop( 'checked', true );
-			$( '#post-visibility-display' ).text( 'Skrytý odkaz' ); //TODO: translate
+			$( '#post-visibility-display' ).text( data.lang_secured_link );
 
 			var new_option = $( '<option/>' )
 				.attr( 'value', 'secured' )
 				.prop( 'selected', true )
-				.text( 'Skrytý odkaz' ); //TODO: as usual
+				.text( data.lang_secured_link );
 
 			$( '#post_status' ).val( 'secured' ).append( new_option );
 			$( '.save-post-status' ).trigger( 'click' );

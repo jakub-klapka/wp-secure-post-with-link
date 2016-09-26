@@ -11,6 +11,7 @@ use Lumi\SecurePostWithLink\SingletonTrait;
 class HandlePostSave implements ProviderInterface {
 	use SingletonTrait;
 
+	/** @var Config */
 	private $config;
 
 	/**

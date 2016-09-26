@@ -177,7 +177,7 @@ class HandleFrontAccess implements ProviderInterface {
 			if( !isset( $wp->query_vars['secure_link_token'] )
 			    || $wp->query_vars['secure_link_token'] !== $post_access_token ) {
 
-				wp_die( 'Nepovolený přístup.', null, [ 'response' => 401 ] ); //TODO: translate
+				wp_die( __( 'Invalid access', $this->config->get( 'textdomain' ) ), null, [ 'response' => 401 ] );
 
 			}
 
