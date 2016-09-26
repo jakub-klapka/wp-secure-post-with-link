@@ -25,6 +25,8 @@ class AdminUi implements ProviderInterface {
 
 		add_filter( 'get_sample_permalink', [ $this, 'modifySamplePermalinkOnSecuredPosts' ], 10, 5 );
 
+		add_filter( 'display_post_states', [ $this, 'addPostStateToPostsListing' ], 10, 2 );
+
 	}
 
 	/**
@@ -129,6 +131,23 @@ class AdminUi implements ProviderInterface {
 
 		return $permalink;
 
+	}
+
+	/**
+	 * Add states (identifiers after post name) to secured posts on admin screens
+	 *
+	 * @param array $post_states Array of all states for current post
+	 * @param \WP_Post $post Current post
+	 *
+	 * @wp-filter display_post_states
+	 *
+	 * @return array
+	 */
+	public function addPostStateToPostsListing( $post_states, $post ) {
+		if( $post->post_status === 'secured' ) {
+			$post_states[] = 'Zabezpečeno odkazem'; //TODO: as usual
+		}
+		return $post_states;
 	}
 
 }
