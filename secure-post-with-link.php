@@ -23,7 +23,8 @@ $providers = [
 	Lumi\SecurePostWithLink\Controllers\HandlePostSave::class,
 	Lumi\SecurePostWithLink\Controllers\RegisterPostStatus::class,
 	Lumi\SecurePostWithLink\Controllers\HandleFrontAccess::class,
-	Lumi\SecurePostWithLink\Controllers\Translation::class
+	Lumi\SecurePostWithLink\Controllers\Translation::class,
+	Lumi\SecurePostWithLink\Config::class
 ];
 
 /**
