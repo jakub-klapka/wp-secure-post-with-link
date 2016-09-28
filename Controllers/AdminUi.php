@@ -55,7 +55,7 @@ class AdminUi implements ProviderInterface {
 	public function registerScriptsAndStyles() {
 
 		wp_register_script( 'secure-post-with-link--admin-ui',
-			$this->config->get( 'assets_url' ) . '/admin-ui.js',
+			$this->config->get( 'assets_url' ) . '/admin-ui.min.js',
 			[ 'jquery' ],
 			$this->config->get( 'static_version' ),
 			true );
