@@ -66,7 +66,7 @@ class Config implements ProviderInterface {
 	 */
 	public function boot() {
 
-		add_action( 'init', [ $this, 'injectConfig' ], 99 );
+		add_action( 'init', [ $this, 'injectConfig' ], 9 );
 
 	}
 

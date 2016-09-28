@@ -35,9 +35,6 @@ class HandleFrontAccess implements ProviderInterface {
 		add_action( 'parse_request', [ $this, 'maybeAddPostStatusQueryVarToRequest' ] );
 
 		add_action( 'wp', [ $this, 'checkForValidAccessToken' ] );
-		
-		register_activation_hook( $this->config->get( 'main_plugin_file_path' ), [ $this, 'flushRewriteRules' ] );
-		register_deactivation_hook( $this->config->get( 'main_plugin_file_path' ), [ $this, 'flushRewriteRules' ] );
 
 	}
 
@@ -184,16 +181,6 @@ class HandleFrontAccess implements ProviderInterface {
 
 		}
 
-	}
-
-	/**
-	 * Flush WP transient for rewrite rules on plugin activation/deactivation
-	 *
-	 * @wp-action register_activation_hook
-	 * @wp-action register_deactivation_hook
-	 */
-	public function flushRewriteRules() {
-		flush_rewrite_rules();
 	}
 
 }
