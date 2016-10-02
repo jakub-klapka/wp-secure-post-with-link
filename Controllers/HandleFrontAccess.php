@@ -42,13 +42,14 @@ class HandleFrontAccess implements ProviderInterface {
 	 * Loop through allowed post types and register action to add RW rules for each
 	 *
 	 * Have to be executed after init to allow config injection
+	 * Using __call method to pass post_type for rewrite rules generating
 	 *
 	 * @wp-action init
 	 */
 	public function registerHooksForPostTypes() {
 
 		foreach( $this->config->get( 'allowed_post_types' ) as $post_type ) {
-			add_filter( "{$post_type}_rewrite_rules", [ $this, 'registerRewriteRules' ] );
+			add_filter( "{$post_type}_rewrite_rules", [ $this, "registerRewriteRules_{$post_type}" ], 10, 2 );
 		}
 
 	}
@@ -61,18 +62,33 @@ class HandleFrontAccess implements ProviderInterface {
 	 * at the end of URL. Then register it to bottom of rules, so attachments still be matched
 	 * before our new rule.
 	 *
+	 * This method is usualy run by magic method registerRewriteRules_{$post_type}
+	 *
 	 * @wp-action {$post_type}_rewrite_rules
 	 *
-	 * @param array $rules
+	 * @param array         $rules      All rewrite rules for current post type
+	 * @param null|string   $post_type  Post type, for which the filter has been run
 	 *
-	 * @return array Rules with new ones
+	 * @return array Same as input array, new rules are added dynamicaly via add_rewrite_rule
 	 *
-	 * TODO: filter out archives, maybe process only rules with page, pagename, {cpt} var in them
 	 */
-	public function registerRewriteRules( $rules ) {
+	public function registerRewriteRules( $rules, $post_type = null ) {
 
+		//Filter out detail page
+		switch( $post_type ){
+			case( 'post' ): $param = 'name='; break;
+			case( 'page' ): $param = 'pagename='; break;
+			default: $param = "{$post_type}=";
+		}
+
+		$detail_rules = array_filter( $rules, function( $rule ) use ( $param ) {
+			if( strpos( $rule, $param ) !== false ) return true;
+			return false;
+		} );
+
+		//Filter out attachments, feeds etc
 		$exclude_terms = [ 'attachment=', 'feed=', 'embed=', 'tb=' ];
-		$filtered_rules = array_filter( $rules, function( $rule ) use ( $exclude_terms ) {
+		$filtered_rules = array_filter( $detail_rules, function( $rule ) use ( $exclude_terms ) {
 			foreach( $exclude_terms as $term ) {
 				if( strpos( $rule, $term ) !== false ) return false;
 			}
@@ -182,6 +198,31 @@ class HandleFrontAccess implements ProviderInterface {
 			}
 
 		}
+
+	}
+
+	/**
+	 * Handle magic methods within this class
+	 *
+	 * @param string $method_name
+	 * @param array $args
+	 *
+	 * @return mixed
+	 */
+	public function __call( $method_name, $args ) {
+
+		/**
+		 * Register rewrite rules handling
+		 * @method registerRewriteRules_{$post_type}
+		 */
+		$prefix = 'registerRewriteRules_';
+		if( substr( $method_name, 0, strlen( $prefix ) ) === $prefix ) {
+			$post_type = substr( $method_name, strlen( $prefix ) );
+
+			return $this->registerRewriteRules( $args[ 0 ], $post_type );
+		}
+
+		trigger_error( 'Call to undefined method '.__CLASS__.'::'.$method_name.'()', E_USER_ERROR );
 
 	}
 
