@@ -7,7 +7,7 @@ Stable tag: 1.0
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Add new post status "Secured with Link". Posts with this status will be accessible only with randomly generated token in URL.
+Adds new post status "Secured with Link". Posts with this status will be accessible only with randomly generated token in URL.
 
 == Description ==
 This plugin adds new status for posts (or pages/custom post types) called "Secured with link". If you select this status, that specific post wouldn't be accessible on its standard URL anymore, but you have to access it on URL with random token in it. This URL is displayed on post edit screen in administration.
@@ -15,14 +15,12 @@ This plugin adds new status for posts (or pages/custom post types) called "Secur
 = Configuration =
 For now, there is no administration screen yet. To configure plugin, you can inject your changes to plugin configuration array from your theme or plugin. Just put this code into *functions.php* file in your theme:
 
-```
-add_filter( 'lumi.secure_post_with_link.config', function( $config ){
+`add_filter( 'lumi.secure_post_with_link.config', function( $config ){
     $config[ 'allowed_post_types' ] = [ 'post', 'page' ];
     $config[ 'url_identifier' ] = 'sec';
     // ... Other $config variables
     return $config;
-} );
-```
+} );`
 
 Preferably, don't include lines with attributes, which you don't want to change.
 
@@ -55,6 +53,9 @@ In case, you have changed any settings after plugin installation, deactivate and
 * Regenerate token
 * Role management - users with privileges should be able to access post without token
 
+= Developers =
+Plugin is also hosted on [Github](https://github.com/jakub-klapka/wp-secure-post-with-link).
+
 == Installation ==
 Unzip files to **secure-post-with-link** folder in your wp-plugins.
 
@@ -65,6 +66,3 @@ Unzip files to **secure-post-with-link** folder in your wp-plugins.
 == Changelog ==
 = 1.0 =
 * Initial version with base functionality
-
-== Developers ==
-Plugin is also hosted on [Github](https://github.com/jakub-klapka/wp-secure-post-with-link).
