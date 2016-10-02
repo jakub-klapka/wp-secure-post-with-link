@@ -79,6 +79,9 @@ class Config implements ProviderInterface {
 	 */
 	public function setPluginVersion() {
 
+		/** WordPress Plugin Administration API */
+		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
 		$plugin_data = get_plugin_data( __DIR__ . '/secure-post-with-link.php', false, false );
 		$this->set( 'static_version', $plugin_data[ 'Version' ] );
 

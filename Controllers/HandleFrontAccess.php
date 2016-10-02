@@ -66,6 +66,8 @@ class HandleFrontAccess implements ProviderInterface {
 	 * @param array $rules
 	 *
 	 * @return array Rules with new ones
+	 *
+	 * TODO: filter out archives, maybe process only rules with page, pagename, {cpt} var in them
 	 */
 	public function registerRewriteRules( $rules ) {
 
@@ -82,7 +84,7 @@ class HandleFrontAccess implements ProviderInterface {
 			$generated_rule = $this->generateNewRewriteRuleBasedOnCptRule( $rule, $redirect );
 
 			if( $generated_rule !== false ) {
-				add_rewrite_rule( $generated_rule[ 'new_rule' ], $generated_rule[ 'new_redirect' ] );
+				add_rewrite_rule( $generated_rule[ 'new_rule' ], $generated_rule[ 'new_redirect' ], 'top' );
 			}
 
 		}
@@ -112,7 +114,8 @@ class HandleFrontAccess implements ProviderInterface {
 		//Get greatest matches number
 		preg_match_all( '/\$matches\[(\d+)\]/', $redirect, $matches );
 
-		if( !isset( $matches[1] ) ) return false; //There has to be at least one existing match pair for CPT
+		//There has to be at least one existing match pair for CPT, also there is some bug in WP rewrite rules inspector
+		if( !isset( $matches[1] ) || empty( $matches[1] ) ) return false;
 
 		$numbers = $matches[1];
 		$numbers = array_map( function( $number ) {
@@ -148,8 +151,7 @@ class HandleFrontAccess implements ProviderInterface {
 	public function maybeAddPostStatusQueryVarToRequest( $wp ) {
 
 		if( isset( $wp->query_vars[ 'secure_link_token' ] )
-		    && !empty( $wp->query_vars[ 'secure_link_token' ] )
-			&& in_array( $wp->query_vars[ 'post_type' ], $this->config->get( 'allowed_post_types' ) ) ) {
+		    && !empty( $wp->query_vars[ 'secure_link_token' ] ) ) {
 
 			$wp->query_vars[ 'post_status' ] = 'secured';
 
