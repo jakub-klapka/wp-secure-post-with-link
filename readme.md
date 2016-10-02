@@ -4,6 +4,8 @@ License: GPL2
 
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
+WP Repository page: https://wordpress.org/plugins/secure-post-with-link/
+
 ## Description
 
 This plugin adds new status for posts (or pages/custom post types) called \"Secured with link\". If you select this status, that specific post wouldn't be accessible on its standard URL anymore, but you have to access it on URL with random token in it. This URL is displayed on post edit screen in administration.

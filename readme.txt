@@ -3,7 +3,7 @@ Contributors: lapak
 Tags: secure,post,link,hide,private,URL,status
 Requires at least: 4.5
 Tested up to: 4.6
-Stable tag: trunk
+Stable tag: 1.0
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
