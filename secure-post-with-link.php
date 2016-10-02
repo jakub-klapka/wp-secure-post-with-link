@@ -8,6 +8,8 @@ Author URI:  https://www.lumiart.cz/
 Text Domain: lumi-secure-post-with-link
 Domain Path: /lang
 Repository:  https://github.com/jakub-klapka/wp-secure-post-with-link
+License:     GPL2
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
 /*
