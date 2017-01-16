@@ -52,5 +52,9 @@ In case, you have changed any settings after plugin installation, deactivate and
 Unzip files to **secure-post-with-link** folder in your wp-plugins.
 
 ## Changelog
+
+### 1.1
+* Compatibility fix with WP Super Cache (secured posts were not cleared from cache on updates)
+
 ### 1.0
 * Initial version with base functionality

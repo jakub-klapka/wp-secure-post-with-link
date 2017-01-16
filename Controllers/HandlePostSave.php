@@ -37,6 +37,7 @@ class HandlePostSave implements ProviderInterface {
 	public function addSaveActionForPostTypes() {
 		foreach ( $this->config->get( 'allowed_post_types' ) as $type ) {
 			add_action( "save_post_{$type}", [ $this, 'maybeGenerateNewToken' ], 10, 3 );
+			add_action( "save_post_{$type}", [ $this, 'invalidatePageCache' ], 10, 3 );
 		}
 	}
 
@@ -81,6 +82,30 @@ class HandlePostSave implements ProviderInterface {
 
 			update_post_meta( $post_id, $this->config->get( 'secured_meta_name' ), $this->generateRandomToken() );
 
+		}
+
+	}
+
+	/**
+	 * Invalidate WP Super Cache page on update
+	 * 
+	 * (as wp-super-cache listens only for public post updates)
+	 * https://odd.blog/wp-super-cache-developers/
+	 * plugins\wp-super-cache\wp-cache-phase2.php:1153
+	 *
+	 * @wp-action save_post_{$post->post_type}
+	 * @param int $post_id Post ID
+	 * @param \WP_Post $post Post
+	 * @param bool $update True, if this is update of existing post
+	 */
+	public function invalidatePageCache( $post_id, $post, $update ) {
+
+		//Bail on autosaves
+		if( wp_is_post_revision( $post ) || wp_is_post_autosave( $post ) ) return;
+
+		if( function_exists( 'wp_cache_post_change' ) ) {
+			define( 'WPSCFORCEUPDATE', true ); //Forces WPS to clear post from cache, even when post->post_status !== 'published'
+			wp_cache_post_change( $post_id );
 		}
 
 	}

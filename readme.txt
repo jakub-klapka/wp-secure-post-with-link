@@ -64,5 +64,8 @@ Unzip files to **secure-post-with-link** folder in your wp-plugins.
 2. Status setting
 
 == Changelog ==
+= 1.1 =
+* Compatibility fix with WP Super Cache (secured posts were not cleared from cache on updates)
+
 = 1.0 =
 * Initial version with base functionality
