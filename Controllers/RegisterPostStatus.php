@@ -37,6 +37,7 @@ class RegisterPostStatus implements ProviderInterface {
 		register_post_status( 'secured', array(
 			'label'                     => __( 'Secure link', $this->config->get( 'textdomain' ) ),
 			'public'                    => false,
+			'private'                   => true,
 			'exclude_from_search'       => true,
 			'protected'                 => true,
 			'show_in_admin_all_list'    => true,
