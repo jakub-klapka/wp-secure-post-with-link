@@ -2,8 +2,8 @@
 Contributors: lapak
 Tags: secure,post,link,hide,private,URL,status
 Requires at least: 4.5
-Tested up to: 4.6
-Stable tag: 1.1
+Tested up to: 4.9
+Stable tag: 1.2
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,11 @@ Unzip files to **secure-post-with-link** folder in your wp-plugins.
 2. Status setting
 
 == Changelog ==
+= 1.2 =
+* Tested with WP 4.9
+* Fix comments posting on secured posts
+* Fix few admin links to secured pages
+
 = 1.1 =
 * Compatibility fix with WP Super Cache (secured posts were not cleared from cache on updates)
 

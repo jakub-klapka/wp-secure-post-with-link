@@ -23,7 +23,12 @@ class AdminUi implements ProviderInterface {
 
 		add_action( 'current_screen', [ $this, 'maybeEnqueueScript' ] );
 
-		add_filter( 'get_sample_permalink', [ $this, 'modifySamplePermalinkOnSecuredPosts' ], 10, 5 );
+		// Custom post types
+		add_filter( 'post_type_link', [ $this, 'modifyPermalinkOnSecuredPosts' ], 10, 2 );
+		// Post
+		add_filter( 'post_link', [ $this, 'modifyPermalinkOnSecuredPosts' ], 10, 2 );
+		// Page
+		add_filter( 'page_link', [ $this, 'modifyPermalinkOnSecuredPosts' ], 10, 2 );
 
 		add_filter( 'display_post_states', [ $this, 'addPostStateToPostsListing' ], 10, 2 );
 
@@ -108,29 +113,25 @@ class AdminUi implements ProviderInterface {
 	}
 
 	/**
-	 * @param string  $permalink Sample permalink.
-	 *                  Eg.: $permalink = {array} [2]
-	 *                          0 = "https://localhost/linnette_2015/wp/blog/%pagename%/"
-	 *                          1 = "tomas-hajzler-krest-knizek"
-	 * @param int     $post_id   Post ID.
-	 * @param string  $title     Post title.
-	 * @param string  $name      Post name (slug).
-	 * @param \WP_Post $post      Post object.
-	 * @wp-filter get_sample_permalink
+	 * Add token to all get_permalink calls
+	 * Get_permalink should be called only on places, where secured post will be visible anyway
+	 *
+	 * @param string $link
+	 * @param \WP_Post $wp_post
+	 *
+	 * @wp-filter post_type_link
+	 * @wp-filter post_link
+	 * @wp-filter page_link
 	 *
 	 * @return string
 	 */
-	public function modifySamplePermalinkOnSecuredPosts( $permalink, $post_id, $title, $name, $post ) {
+	public function modifyPermalinkOnSecuredPosts( $link, $wp_post ) {
 
-		if( $post->post_status !== 'secured' ) return $permalink;
+		if( $wp_post->post_status !== 'secured' ) return $link;
 
-		$token = get_post_meta( $post->ID, $this->config->get( 'secured_meta_name' ), true );
+		$token = get_post_meta( $wp_post->ID, $this->config->get( 'secured_meta_name' ), true );
 
-		if( $token != false ) {
-			$permalink[ 0 ] = $permalink[ 0 ] . $this->config->get( 'url_identifier' ) . '/' . $token . '/';
-		}
-
-		return $permalink;
+		return $link . $this->config->get( 'url_identifier' ) . '/' . $token . '/';
 
 	}
 

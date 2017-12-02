@@ -53,6 +53,11 @@ Unzip files to **secure-post-with-link** folder in your wp-plugins.
 
 ## Changelog
 
+### 1.2
+* Tested with WP 4.9
+* Fix comments posting on secured posts
+* Fix few admin links to secured pages
+
 ### 1.1
 * Compatibility fix with WP Super Cache (secured posts were not cleared from cache on updates)
 
