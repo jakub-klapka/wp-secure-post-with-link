@@ -1,10 +1,15 @@
+/*
+ * gulp -> minify assets
+ * gulp release -> create package for WP repo
+ */
+
 var gulp = require( 'gulp' ),
 	debug = require( 'gulp-debug' ),
 	uglify = require( 'gulp-uglify' ),
 	rename = require( 'gulp-rename' );
 
 gulp.task( 'default', function() {
-	gulp.src( [ 'assets/**/*.js', '!assets/**/*.min.js' ], { 'basePath': 'assets' } )
+	return gulp.src( [ 'assets/**/*.js', '!assets/**/*.min.js' ], { 'basePath': 'assets' } )
 		.pipe( debug() )
 		.pipe( uglify() )
 		.pipe( rename( function( path ) {
@@ -13,3 +18,18 @@ gulp.task( 'default', function() {
 		.pipe( debug() )
 		.pipe( gulp.dest( 'assets' ) );
 });
+
+gulp.task( 'release', function() {
+	return gulp.src( [
+		'assets/**/*.min.js',
+		'Controllers/**/*',
+		'lang/**/*',
+		'Config.php',
+		'ProviderInterface.php',
+		'readme.txt',
+		'secure-post-with-link.php',
+		'SingletonTrait.php'
+	], { 'base' : '.' } )
+		.pipe( debug() )
+		.pipe( gulp.dest( 'wp_repo_package' ) ); //TODO: files are not in subfolders
+} );

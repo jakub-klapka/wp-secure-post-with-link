@@ -53,6 +53,9 @@ Unzip files to **secure-post-with-link** folder in your wp-plugins.
 
 ## Changelog
 
+### 1.2.1
+* Fix release process
+
 ### 1.2
 * Tested with WP 4.9
 * Fix comments posting on secured posts

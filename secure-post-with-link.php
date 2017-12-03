@@ -2,7 +2,7 @@
 /*
 Plugin Name: Secure Post with Link
 Description: Add new status for posts: "Secured with Link". Posts with this status will be accessible only on URL with randomly generated token.
-Version:     1.1
+Version:     1.2.1
 Author:      Jakub Klapka
 Author URI:  https://www.lumiart.cz/
 Text Domain: lumi-secure-post-with-link
