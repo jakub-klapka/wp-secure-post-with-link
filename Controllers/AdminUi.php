@@ -28,7 +28,7 @@ class AdminUi implements ProviderInterface {
 		// Post
 		add_filter( 'post_link', [ $this, 'modifyPermalinkOnSecuredPosts' ], 10, 2 );
 		// Page
-		add_filter( 'page_link', [ $this, 'modifyPermalinkOnSecuredPosts' ], 10, 2 );
+		add_filter( 'page_link', [ $this, 'modifyPermalinkOnSecuredPage' ], 10, 2 );
 
 		add_filter( 'display_post_states', [ $this, 'addPostStateToPostsListing' ], 10, 2 );
 
@@ -121,7 +121,6 @@ class AdminUi implements ProviderInterface {
 	 *
 	 * @wp-filter post_type_link
 	 * @wp-filter post_link
-	 * @wp-filter page_link
 	 *
 	 * @return string
 	 */
@@ -132,6 +131,28 @@ class AdminUi implements ProviderInterface {
 		$token = get_post_meta( $wp_post->ID, $this->config->get( 'secured_meta_name' ), true );
 
 		return $link . $this->config->get( 'url_identifier' ) . '/' . $token . '/';
+
+	}
+
+	/**
+	 * Since internal Page post type calls page_link with Post ID (as opposed to all other post types), fetch WP_Post first
+	 *
+	 * @param string $link
+	 * @param int $page_id
+	 *
+	 * @wp-filter page_link
+	 *
+	 * @return string
+	 */
+	public function modifyPermalinkOnSecuredPage( $link, $page_id ) {
+
+		$wp_post = get_post( $page_id );
+
+		if( $wp_post === null ) {
+			return $link;
+		}
+
+		return $this->modifyPermalinkOnSecuredPosts( $link, $wp_post );
 
 	}
 

@@ -100,7 +100,11 @@ class HandleFrontAccess implements ProviderInterface {
 			$generated_rule = $this->generateNewRewriteRuleBasedOnCptRule( $rule, $redirect );
 
 			if( $generated_rule !== false ) {
-				add_rewrite_rule( $generated_rule[ 'new_rule' ], $generated_rule[ 'new_redirect' ], 'top' );
+				/*
+				 * We have to prepend new rules right before current post type
+				 * Using add_rewrite_rule with 'top' placement would screw ordering of internal page/post post types, upon which is WP dependent
+				 */
+				$rules = array_merge( [ $generated_rule[ 'new_rule' ] => $generated_rule[ 'new_redirect' ] ], $rules );
 			}
 
 		}
