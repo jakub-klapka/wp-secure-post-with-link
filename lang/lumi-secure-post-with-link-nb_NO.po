@@ -1,0 +1,64 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Untitled project\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-02 12:56+0100\n"
+"PO-Revision-Date: 2019-03-02 13:11+0100\n"
+"Last-Translator: alexander\n"
+"Language-Team: Bokmål (Norway)\n"
+"Language: nb-NO\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz\n"
+"X-Loco-Source-Locale: en\n"
+"X-Loco-Project-Id: 63820\n"
+"X-Loco-Api-Version: 1.0.21 20190227-1"
+
+#: ../Controllers/AdminUi.php:85 loco:5c7a70557ec8ae789a0e12e2
+msgid "Secured Link"
+msgstr "Sikret Link"
+
+#: ../Controllers/AdminUi.php:149 loco:5c7a70557ec8ae789a0e12e3
+msgid "Secured with link"
+msgstr "Sikret med lenke"
+
+#: ../Controllers/HandleFrontAccess.php:180 loco:5c7a70557ec8ae789a0e12e4
+msgid "Invalid access"
+msgstr "Ugyldig tilgang"
+
+#: ../Controllers/RegisterPostStatus.php:38 loco:5c7a70557ec8ae789a0e12e5
+msgid "Secure link"
+msgstr "Sikker link"
+
+#: ../Controllers/RegisterPostStatus.php:44 loco:5c7a70557ec8ae789a0e12e6
+#, php-format
+msgid "Secured with link <span class=\"count\">(%s)</span>"
+msgid_plural "Secured with link <span class=\"count\">(%s)</span>"
+msgstr[0] "Sikret med lenke <span class=\"count\">(%s)</span>"
+msgstr[1] "Sikret med lenke <span class=\"count\">(%s)</span>"
+
+#. Name of the plugin
+#: loco:5c7a70557ec8ae789a0e12e8
+msgid "Secure Post with Link"
+msgstr "Sikkre innlegg med link"
+
+#. Description of the plugin
+#: loco:5c7a70557ec8ae789a0e12e9
+msgid ""
+"Add new status for posts: \"Secured with Link\". Posts with this status will "
+"be accessible only on URL with randomly generated token."
+msgstr ""
+"Legg til ny status for innlegg: \"Sikret med Link \". Innlegg med denne "
+"statusen vil bare være tilgjengelig på URL med tilfeldig generert token."
+
+#. Author of the plugin
+#: loco:5c7a70557ec8ae789a0e12ea
+msgid "Jakub Klapka"
+msgstr "Jakub Klapka"
+
+#. Author URI of the plugin
+#: loco:5c7a70557ec8ae789a0e12eb
+msgid "https://www.lumiart.cz"
+msgstr "https://www.lumiart.cz"
