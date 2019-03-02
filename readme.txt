@@ -3,7 +3,7 @@ Contributors: lapak
 Tags: secure,post,link,hide,private,URL,status
 Requires at least: 4.5
 Tested up to: 4.9
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,9 @@ Unzip files to **secure-post-with-link** folder in your wp-plugins.
 2. Status setting
 
 == Changelog ==
+= 1.2.3 =
+* Add Norwegian language (props [Alexander Zeiher](https://github.com/axal90))
+
 = 1.2.2 =
 * Fix plugin behavior for internal Page post type
 

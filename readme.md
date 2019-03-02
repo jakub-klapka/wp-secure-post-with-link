@@ -53,6 +53,9 @@ Unzip files to **secure-post-with-link** folder in your wp-plugins.
 
 ## Changelog
 
+### 1.2.3
+* Add Norwegian language (props [Alexander Zeiher](https://github.com/axal90))
+
 ### 1.2.2
 * Fix plugin behavior for internal Page post type
 
