@@ -2,11 +2,9 @@
 
 namespace Lumi\SecurePostWithLink\Controllers;
 
-
 use Lumi\SecurePostWithLink\Config;
 use Lumi\SecurePostWithLink\ProviderInterface;
 use Lumi\SecurePostWithLink\SingletonTrait;
-
 
 class AdminUi implements ProviderInterface {
 	use SingletonTrait;
@@ -44,6 +42,9 @@ class AdminUi implements ProviderInterface {
 
 		if( $this->shouldEnableUiScript() ) {
 
+			add_action( 'enqueue_block_editor_assets', [ $this, 'registerGutenbergScriptsAndStyles' ] );
+
+			//TODO: dont call when using gutenberg
 			add_action( 'admin_enqueue_scripts', [ $this, 'registerScriptsAndStyles' ] );
 
 			add_action( 'admin_enqueue_scripts', [ $this, 'pushDataToScript' ] );
@@ -66,6 +67,22 @@ class AdminUi implements ProviderInterface {
 			true );
 
 		wp_enqueue_script( 'secure-post-with-link--admin-ui');
+
+	}
+
+	/**
+	 * TODO
+	 */
+	public function registerGutenbergScriptsAndStyles() {
+
+		wp_register_script( 'secure-post-with-link--admin-ui-gutenberg',
+			$this->config->get( 'assets_url' ) . '/admin-ui-gutenberg.min.js',
+			//TODO: strip unneeded deps
+			[ 'jquery', 'wp-plugins', 'wp-edit-post', 'wp-element', 'wp-compose', 'wp-data' ],
+			$this->config->get( 'static_version' ),
+			true );
+
+		wp_enqueue_script( 'secure-post-with-link--admin-ui-gutenberg');
 
 	}
 

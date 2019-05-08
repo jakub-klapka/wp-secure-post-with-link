@@ -1,6 +1,7 @@
 /*
  * gulp -> minify assets
  * gulp release -> create package for WP repo
+ * //TODO: integrate webpack build
  */
 
 var gulp = require( 'gulp' ),
